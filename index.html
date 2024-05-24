@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cabify</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    
+    
+    
+    
+    
+    <div id="time">
+        <div class="circle" style="--clr:#bdf53b;">
+            <svg>
+                <circle cx="70" cy="70" r="70" id="dd" stroke-dasharray="440"></circle>
+            </svg>
+            <div id="days">00<br><span>Days</span></div>
+        </div>
+        <div class="circle" style="--clr:#3beb8a;">
+            <svg>
+                <circle cx="70" cy="70" r="70" id="hh" stroke-dasharray="440"></circle>
+            </svg>
+            <div id="hours">00<br><span>Hours</span></div>
+        </div>
+        <div class="circle" style="--clr:#4fbaec;">
+            <svg>
+                <circle cx="70" cy="70" r="70" id="mm" stroke-dasharray="440"></circle>
+            </svg>
+            <div id="minutes">00<br><span>Minutes</span></div>
+        </div>
+        <div class="circle" style="--clr:#c777ec;">
+            <svg>
+                <circle cx="70" cy="70" r="70" id="ss" stroke-dasharray="440"></circle>
+            </svg>
+            <div id="seconds">00<br><span>Seconds</span></div>
+        </div>
+    </div>
+    <h2 class="coming-soon">CABIFY<br><span>COMING SOON</span></h2>
+    <script>
+        let daysElement = document.getElementById('days');
+        let hoursElement = document.getElementById('hours');
+        let minutesElement = document.getElementById('minutes');
+        let secondsElement = document.getElementById('seconds');
+
+        let ddCircle = document.getElementById('dd');
+        let hhCircle = document.getElementById('hh');
+        let mmCircle = document.getElementById('mm');
+        let ssCircle = document.getElementById('ss');
+
+        let endDate = new Date('2024-05-29T00:00:00').getTime();
+
+        let x = setInterval(function() {
+            let now = new Date().getTime();
+            let distance = endDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in the respective elements
+            daysElement.innerHTML = days + "<br><span>Days</span>";
+            hoursElement.innerHTML = hours + "<br><span>Hours</span>";
+            minutesElement.innerHTML = minutes + "<br><span>Minutes</span>";
+            secondsElement.innerHTML = seconds + "<br><span>Seconds</span>";
+
+            // Update the stroke-dashoffset for each circle
+            ddCircle.style.strokeDashoffset = 440 - (440 * days) / 365;
+            hhCircle.style.strokeDashoffset = 440 - (440 * hours) / 24;
+            mmCircle.style.strokeDashoffset = 440 - (440 * minutes) / 60;
+            ssCircle.style.strokeDashoffset = 440 - (440 * seconds) / 60;
+
+            // If the countdown is over, stop the interval
+            if (distance < 0) {
+                clearInterval(x);
+                daysElement.innerHTML = "00<br><span>Days</span>";
+                hoursElement.innerHTML = "00<br><span>Hours</span>";
+                minutesElement.innerHTML = "00<br><span>Minutes</span>";
+                secondsElement.innerHTML = "00<br><span>Seconds</span>";
+
+                // Reset stroke-dashoffset
+                ddCircle.style.strokeDashoffset = 440;
+                hhCircle.style.strokeDashoffset = 440;
+                mmCircle.style.strokeDashoffset = 440;
+                ssCircle.style.strokeDashoffset = 440;
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
